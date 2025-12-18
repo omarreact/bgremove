@@ -1,0 +1,230 @@
+:root {
+  --primary: #0d6efd;
+  --bg: #f4f7f6;
+  --surface: #ffffff;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg);
+  color: #1f2937;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  background: var(--surface);
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.75rem 0;
+}
+
+/* Layout */
+.main-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Upload Screen */
+.upload-container {
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  animation: fadeIn 0.5s ease;
+}
+.upload-box {
+  background: var(--surface);
+  border: 2px dashed #d1d5db;
+  border-radius: 16px;
+  padding: 3rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.upload-box:hover,
+.upload-box.drag-active {
+  border-color: var(--primary);
+  background-color: #eff6ff;
+}
+
+/* Editor Screen */
+.editor-container {
+  display: none; /* Hidden initially */
+  width: 100%;
+  max-width: 1000px;
+  height: 85vh;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex-direction: row;
+}
+
+/* Canvas Area */
+.canvas-wrapper {
+  flex: 1;
+  position: relative;
+  background-color: #e5e5e5;
+  /* Checkerboard */
+  background-image:
+    linear-gradient(45deg, #ddd 25%, transparent 25%),
+    linear-gradient(-45deg, #ddd 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #ddd 75%),
+    linear-gradient(-45deg, transparent 75%, #ddd 75%);
+  background-size: 20px 20px;
+  background-position:
+    0 0,
+    0 10px,
+    10px -10px,
+    -10px 0px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: crosshair;
+}
+
+canvas {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar Tools */
+.sidebar {
+  width: 300px;
+  background: #fff;
+  border-left: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.tool-section {
+  margin-bottom: 2rem;
+}
+.section-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+/* Color Swatches */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.swatch {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid #e5e7eb;
+  position: relative;
+  overflow: hidden;
+}
+.swatch.active {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
+}
+.swatch-transparent {
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIi8+CjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNjY2MiLz4KPHJlY3QgeD0iNCIgeT0iNCIgd2lkdGg9IjQiIGhlaWdodD0iNCIgZmlsbD0iI2NjYyIvPgo8L3N2Zz4=");
+}
+
+/* Brush Tools */
+.brush-btn-group {
+  display: flex;
+  gap: 10px;
+  background: #f3f4f6;
+  padding: 5px;
+  border-radius: 10px;
+}
+.brush-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #4b5563;
+  transition: all 0.2s;
+}
+.brush-btn:hover {
+  background: #e5e7eb;
+}
+.brush-btn.active {
+  background: #fff;
+  color: var(--primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Loader Overlay */
+.loader-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.progress-bar {
+  width: 200px;
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  margin-top: 15px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  width: 0%;
+  transition: width 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .editor-container {
+    flex-direction: column;
+    height: 100vh;
+    border-radius: 0;
+  }
+  .sidebar {
+    width: 100%;
+    height: 40%;
+    border-left: none;
+    border-top: 1px solid #e5e7eb;
+  }
+  .canvas-wrapper {
+    height: 60%;
+  }
+}
